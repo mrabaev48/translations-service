@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Language } from './language.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateLanguageDto } from "./dto/create-language.dto";
+import { CreateLanguageDto } from './dto/create-language.dto';
 
 @Injectable()
 export class LanguageService {
@@ -10,8 +10,11 @@ export class LanguageService {
   ) {}
 
   async createLang(dto: CreateLanguageDto) {
-    const lang = await this.languageRepository.create(dto);
-    return lang;
+    return await this.languageRepository.create(dto);
+  }
+
+  async getLangById(id: number) {
+    return await this.languageRepository.findByPk(id);
   }
 
   async getAllLangs() {
@@ -19,6 +22,6 @@ export class LanguageService {
   }
 
   async getAllActiveLangs() {
-    return this.languageRepository.findAll({ where: { isActive: true}})
+    return this.languageRepository.findAll({ where: { isActive: true } });
   }
 }

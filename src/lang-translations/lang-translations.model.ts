@@ -8,7 +8,7 @@ import {
 import { Translation } from '../translation/translation.model';
 import { Language } from '../language/language.model';
 
-@Table({ tableName: 'langTranslations', createdAt: false, updatedAt: false })
+@Table({ tableName: 'LangTranslations', createdAt: false, updatedAt: false })
 export class LangTranslations extends Model<LangTranslations> {
   @Column({
     primaryKey: true,

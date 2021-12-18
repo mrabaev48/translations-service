@@ -15,7 +15,7 @@ interface TranslationCreation {
   langId: number;
 }
 
-@Table({ tableName: 'translations' })
+@Table({ tableName: 'Translations' })
 export class Translation extends Model<Translation, TranslationCreation> {
   @ApiProperty({ example: 1, description: 'Primary key' })
   @Column({

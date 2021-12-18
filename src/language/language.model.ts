@@ -1,14 +1,20 @@
-import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  Model,
+  Table,
+} from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
-import { Translation } from "../translation/translation.model";
-import { LangTranslations } from "../lang-translations/lang-translations.model";
+import { Translation } from '../translation/translation.model';
+import { LangTranslations } from '../lang-translations/lang-translations.model';
 
 interface LanguageCreation {
   langName: string;
   langAbbreviation: string;
 }
 
-@Table({ tableName: 'languages' })
+@Table({ tableName: 'Languages' })
 export class Language extends Model<Language, LanguageCreation> {
   @ApiProperty({ example: 1, description: 'Primary key' })
   @Column({

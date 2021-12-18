@@ -12,5 +12,6 @@ import { LangTranslations } from '../lang-translations/lang-translations.model';
   imports: [
     SequelizeModule.forFeature([Language, Translation, LangTranslations]),
   ],
+  exports: [LanguageService],
 })
 export class LanguageModule {}
