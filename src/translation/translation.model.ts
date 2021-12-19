@@ -1,4 +1,5 @@
 import {
+  BelongsTo,
   BelongsToMany,
   Column,
   DataType,
@@ -37,6 +38,6 @@ export class Translation extends Model<Translation, TranslationCreation> {
   @Column({ type: DataType.STRING, allowNull: false })
   value: string;
 
-  @BelongsToMany(() => Language, () => LangTranslations)
-  languages: Language[];
+  @BelongsTo(() => Language, 'id')
+  language;
 }

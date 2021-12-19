@@ -1,10 +1,10 @@
 import {
   BelongsToMany,
   Column,
-  DataType,
+  DataType, HasMany,
   Model,
-  Table,
-} from 'sequelize-typescript';
+  Table
+} from "sequelize-typescript";
 import { ApiProperty } from '@nestjs/swagger';
 import { Translation } from '../translation/translation.model';
 import { LangTranslations } from '../lang-translations/lang-translations.model';
@@ -37,6 +37,6 @@ export class Language extends Model<Language, LanguageCreation> {
   @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: true })
   isActive: boolean;
 
-  @BelongsToMany(() => Translation, () => LangTranslations)
+  @HasMany(() => Translation, 'langId')
   translations: Translation[];
 }

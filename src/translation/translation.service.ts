@@ -14,7 +14,7 @@ export class TranslationService {
   async createTranslation(dto: CreateTranslationDto) {
     const translation = await this.translationRepository.create(dto);
     const lang = await this.languageService.getLangById(dto.langId);
-    await translation.$set('languages', [lang.id]);
+    await translation.$set('language', [lang.id]);
     return translation;
   }
 
@@ -33,6 +33,14 @@ export class TranslationService {
       },
       include: {
         all: true,
+      },
+    });
+  }
+
+  async getByKeyAndLangId(translationKey: string, langId: number) {
+    return await this.translationRepository.findAll({
+      where: {
+        key: translationKey,
       },
     });
   }

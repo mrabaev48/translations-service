@@ -1,16 +1,14 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { TranslationService } from './translation.service';
-import { CreateTranslationDto } from './dto/create-translation.dto';
+import { TranslationDto } from './dto/translation.dto';
 
 @Controller('translation')
 export class TranslationController {
-  constructor(private translationService: TranslationService) {
-    console.log('controller');
-  }
+  constructor(private translationService: TranslationService) {}
 
   @Post()
-  create(@Body() createTranslationDto: CreateTranslationDto) {
-    return this.translationService.createTranslation(createTranslationDto);
+  create(@Body() translationDto: TranslationDto) {
+    return this.translationService.createTranslation(translationDto);
   }
 
   @Get()
@@ -20,7 +18,11 @@ export class TranslationController {
 
   @Get('/getByKey/:key')
   getByKey(@Param('key') key: string) {
-    console.log('get by key');
     return this.translationService.getByKey(key);
+  }
+
+  @Put()
+  updateTranslation(@Body() translationDto: TranslationDto) {
+
   }
 }
