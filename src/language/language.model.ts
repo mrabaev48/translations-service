@@ -1,13 +1,5 @@
-import {
-  BelongsToMany,
-  Column,
-  DataType, HasMany,
-  Model,
-  Table
-} from "sequelize-typescript";
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
-import { Translation } from '../translation/translation.model';
-import { LangTranslations } from '../lang-translations/lang-translations.model';
 
 interface LanguageCreation {
   langName: string;
@@ -36,7 +28,4 @@ export class Language extends Model<Language, LanguageCreation> {
   @ApiProperty({ example: true, description: 'Is language active' })
   @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: true })
   isActive: boolean;
-
-  @HasMany(() => Translation, 'langId')
-  translations: Translation[];
 }

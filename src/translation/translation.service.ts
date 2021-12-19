@@ -1,21 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTranslationDto } from './dto/create-translation.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Translation } from './translation.model';
-import { LanguageService } from '../language/language.service';
+import { TranslationDto } from './dto/translation.dto';
 
 @Injectable()
 export class TranslationService {
   constructor(
     @InjectModel(Translation) private translationRepository: typeof Translation,
-    private languageService: LanguageService,
   ) {}
 
-  async createTranslation(dto: CreateTranslationDto) {
-    const translation = await this.translationRepository.create(dto);
-    const lang = await this.languageService.getLangById(dto.langId);
-    await translation.$set('language', [lang.id]);
-    return translation;
+  async create(dto: TranslationDto) {
+    return await this.translationRepository.create(dto);
   }
 
   async getAll() {
@@ -41,6 +36,40 @@ export class TranslationService {
     return await this.translationRepository.findAll({
       where: {
         key: translationKey,
+        langId: langId,
+      },
+    });
+  }
+
+  async update(dto: TranslationDto, id: number) {
+    const translation = await this.translationRepository.findByPk(id);
+
+    if (!translation) {
+      throw new HttpException(
+        `Translation with id = ${id} not found`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    if (dto.key) {
+      translation.key = dto.key;
+    }
+
+    if (dto.value) {
+      translation.value = dto.value;
+    }
+
+    if (dto.langId && dto.langId > 0) {
+      translation.langId = dto.langId;
+    }
+
+    return await translation.save();
+  }
+
+  async deleteByLangId(langId: number) {
+    return await this.translationRepository.destroy({
+      where: {
+        langId,
       },
     });
   }

@@ -1,14 +1,11 @@
 import {
-  BelongsTo,
-  BelongsToMany,
   Column,
   DataType,
+  ForeignKey,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
-import { Language } from '../language/language.model';
-import { LangTranslations } from '../lang-translations/lang-translations.model';
 
 interface TranslationCreation {
   key: string;
@@ -38,6 +35,8 @@ export class Translation extends Model<Translation, TranslationCreation> {
   @Column({ type: DataType.STRING, allowNull: false })
   value: string;
 
-  @BelongsTo(() => Language, 'id')
-  language;
+  @ApiProperty({ example: 1, description: 'Id of language' })
+  @ForeignKey(() => Translation)
+  @Column({ type: DataType.INTEGER, allowNull: false })
+  langId: number;
 }
